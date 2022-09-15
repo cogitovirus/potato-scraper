@@ -2,8 +2,8 @@
 Web & api scraping some basic info about startups from YCombinator. For fun.
 
 ## TODO:
-- [] strip company url of any additional paths
-- [] fix eslint rules
+- [ ] strip company url of any additional paths
+- [x] fix eslint rules
 - [x] fetch job stories
 - [x] for each job story get job details
 - [x] console.log company url

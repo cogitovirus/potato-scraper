@@ -1,23 +1,5 @@
-const axios = require('axios');
-
-const hackerNewsAPI = axios.create({
-  baseURL: 'https://hacker-news.firebaseio.com',
-});
-
-const getJobStories = async (limit) => {
-  const response = await hackerNewsAPI.get('/v0/jobstories.json');
-  return response.data.slice(0, limit);
-};
-
-const getJobDetails = async (jobID) => {
-  let response;
-  try {
-    response = await hackerNewsAPI.get(`/v0/item/${jobID}.json`);
-    return response.data;
-  } catch (err) {
-    console.log(`${jobID} call finished with an error:\n${err}\nskipping`);
-  }
-};
+const { getJobStories, getJobDetails } = require('./lib/hackerNewsAPI');
+const { cleanURL } = require('./lib/utils');
 
 async function main() {
   // limited the posting to 5 just to avoid possible rate limit
@@ -25,7 +7,21 @@ async function main() {
 
   const jobDetails = await Promise.all(jobStories.map(async (jobID) => getJobDetails(jobID)));
 
-  jobDetails.forEach((jobPosting) => console.log(jobPosting.url));
+  let companyURLs = jobDetails.map((jobDetail) => jobDetail.url)
+    .filter((url) => url !== undefined)
+    .map(cleanURL);
+
+  // remove dupes
+  const urlSet = new Set(companyURLs);
+  // reassign back to array
+  companyURLs = [...urlSet];
+
+  console.log(companyURLs);
 }
 
-main().then(() => { console.log('done'); });
+main().then(() => {
+  process.exit(0);
+}).catch((err) => {
+  process.exitCode = 1;
+  throw err;
+});

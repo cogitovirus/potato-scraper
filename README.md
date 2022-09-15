@@ -2,7 +2,11 @@
 Web & api scraping some basic info about startups from YCombinator. For fun.
 
 ## TODO:
-- [ ] web scraping with https://www.npmjs.com/package/jsdom
+- [ ] write a test
+- [ ] investigate undefined / nulls
+- [ ] encapsulate web scraping logic
+- [ ] save results to a DB (local first , then google cloud)
+- [x] web scraping with https://www.npmjs.com/package/jsdom
 - [x] handle empty urls
 - [x] strip company url of any additional paths
 - [x] fix eslint rules
@@ -11,6 +15,11 @@ Web & api scraping some basic info about startups from YCombinator. For fun.
 - [x] console.log company url
 
 ## Junkyard
+
+head
+    <title></title>
+    <meta name="keywords" content="here">
+    <meta name="description" content="here">
 
 https://github.com/HackerNews/API
 

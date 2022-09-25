@@ -8,7 +8,7 @@ const { JSDOM } = jsdom;
 
 async function main() {
   // limited the posting to 5 just to avoid possible rate limit
-  const jobStories = await getJobStories(1);
+  const jobStories = await getJobStories(5);
 
   const jobDetails = await Promise.all(jobStories.map(async (jobID) => getJobDetails(jobID)));
 

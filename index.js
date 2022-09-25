@@ -1,12 +1,14 @@
 const jsdom = require('jsdom');
-const { getJobStories, getJobDetails } = require('./lib/hackerNewsAPI');
-const { cleanURL } = require('./lib/utils');
+const { getJobStories, getJobDetails } = require('./src/hackerNewsAPI');
+const { cleanURL } = require('./src/utils/cleanURL');
+const { logger } = require('./src/utils/logger');
+require('dotenv').config();
 
 const { JSDOM } = jsdom;
 
 async function main() {
   // limited the posting to 5 just to avoid possible rate limit
-  const jobStories = await getJobStories(10);
+  const jobStories = await getJobStories(1);
 
   const jobDetails = await Promise.all(jobStories.map(async (jobID) => getJobDetails(jobID)));
 
@@ -19,7 +21,7 @@ async function main() {
   // reassign back to an array
   companyURLs = [...urlSet];
 
-  console.log(companyURLs);
+  logger.log('info', `company urls: ${companyURLs}`);
 
   const resourceLoader = new jsdom.ResourceLoader({
     strictSSL: false,
@@ -27,7 +29,7 @@ async function main() {
 
   // TODO: use map
   for (const companyURL of companyURLs) {
-    console.log(`getting details for: ${companyURL}`);
+    logger.log('info', `getting details for: ${companyURL}`);
     // eslint-disable-next-line no-await-in-loop
     const dom = await JSDOM.fromURL(companyURL, { resources: resourceLoader });
     const { head } = dom.window.document;
@@ -37,10 +39,10 @@ async function main() {
     const description = head.querySelector('meta[name="description"]')?.getAttribute('content')
     || head.querySelector('meta[property="og:description"]')?.getAttribute('content');
 
-    console.log(`title: ${title}`);
-    console.log(`keywords: ${keywords}`);
-    console.log(`description: ${description}`);
-    console.log('------------------------');
+    logger.log('info', `title: ${title}`);
+    logger.log('info', `keywords: ${keywords}`);
+    logger.log('info', `description: ${description}`);
+    logger.log('info', '------------------------');
   }
 }
 

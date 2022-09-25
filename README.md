@@ -1,6 +1,16 @@
 # potato-scraper
 Web & api scraping some basic info about startups from YCombinator. For fun.
 
+## Getting the data
+
+
+## Mongo
+db:
+```
+const database = 'potato-scraper';
+const collection = 'hnJobPostings';
+```
+
 ## TODO:
 - [ ] write a test
 - [ ] investigate undefined / nulls
@@ -25,6 +35,9 @@ https://github.com/HackerNews/API
 
 https://hacker-news.firebaseio.com/v0/jobstories.json
 https://hacker-news.firebaseio.com/v0/item/32839972.json
+
+Max item:
+https://hacker-news.firebaseio.com/v0/maxitem.json
 
 
 cloud sql + pub/sub run once a day + cloud function ? how much would it cost

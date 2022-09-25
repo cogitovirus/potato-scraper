@@ -1,5 +1,6 @@
 const axios = require('axios');
 
+// TODO: move to config
 const hackerNewsAPI = axios.create({
   baseURL: 'https://hacker-news.firebaseio.com',
 });

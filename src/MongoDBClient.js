@@ -52,4 +52,4 @@ class MongoDBClient {
   }
 }
 
-module.exports = MongoDBClient;
+module.exports.MongoDBClient = MongoDBClient;

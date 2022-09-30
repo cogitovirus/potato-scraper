@@ -1,4 +1,5 @@
 const axios = require('axios');
+const logger = require('./utils/logger');
 
 // TODO: move to props
 const hackerNewsAPI = axios.create({
@@ -8,7 +9,7 @@ const hackerNewsAPI = axios.create({
 /**
  * Return the latest job stories
  * @param {number} limit
- * @returns {Array.<number>}
+ * @returns {Promise<Array.<number>>}
  */
 module.exports.getJobStories = async (limit) => {
   const response = await hackerNewsAPI.get('/v0/jobstories.json');
@@ -18,14 +19,14 @@ module.exports.getJobStories = async (limit) => {
 /**
  * Return job details based on the jobID
  * @param {number} jobID - unique id of the job offer
- * @returns {object} jobDetails
+ * @returns {Promise<object>} jobDetails
  */
 module.exports.getJobDetails = async (jobID) => {
   let response;
   try {
     response = await hackerNewsAPI.get(`/v0/item/${jobID}.json`);
   } catch (err) {
-    console.log(`${jobID} call finished with an error:\n${err}\nskipping`);
+    logger.log('error', `${jobID} call finished with an error:\n${err}\nskipping`);
     throw err;
   }
 

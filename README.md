@@ -1,6 +1,11 @@
 # potato-scraper
 Web & api scraping some basic info about startups from YCombinator. For fun.
 
+## Run
+```
+node index.js
+```
+
 ## Getting the data
 HN has an API that is generally accessible https://github.com/HackerNews/API.
 First step would be to copy only job posting data from the Web API to my own MongoDB.

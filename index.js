@@ -5,26 +5,35 @@ const { logger } = require('./src/utils/logger');
 require('dotenv').config();
 
 async function main() {
+  // mongo sync
+  // "id": 32839972,
+  // "type": "job",
+
+  const maxItem = await hnAPI.getMaxItem();
+  console.log(maxItem)
+
+
+
   // limited the posting to 5 just to avoid possible rate limit
-  const jobStories = await hnAPI.getJobStories(5);
+  // const jobStories = await hnAPI.getJobStories(5);
 
-  const jobDetails = await Promise.all(jobStories.map(async (jobID) => hnAPI.getJobDetails(jobID)));
+  // const jobDetails = await Promise.all(jobStories.map(async (jobID) => hnAPI.getItemDetails(jobID)));
 
-  let companyURLs = jobDetails.map((jobDetail) => jobDetail.url)
-    .filter((url) => url !== undefined)
-    .map(cleanURL);
+  // let companyURLs = jobDetails.map((jobDetail) => jobDetail.url)
+  //   .filter((url) => url !== undefined)
+  //   .map(cleanURL);
 
-  // remove dupes
-  const urlSet = new Set(companyURLs);
-  // reassign back to an array
-  companyURLs = [...urlSet];
+  // // remove dupes
+  // const urlSet = new Set(companyURLs);
+  // // reassign back to an array
+  // companyURLs = [...urlSet];
 
-  logger.log('info', `company urls: ${companyURLs}`);
-  for (const companyURL of companyURLs) {
-    // TODO: use map
-    // eslint-disable-next-line no-await-in-loop
-    await crawler.crawlCompanyWebsite(companyURL);
-  }
+  // logger.log('info', `company urls: ${companyURLs}`);
+  // for (const companyURL of companyURLs) {
+  //   // TODO: use map
+  //   // eslint-disable-next-line no-await-in-loop
+  //   await crawler.crawlCompanyWebsite(companyURL);
+  // }
 }
 
 main().then(() => {

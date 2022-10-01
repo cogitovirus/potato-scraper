@@ -17,18 +17,22 @@ module.exports.getJobStories = async (limit) => {
 };
 
 /**
- * Return job details based on the jobID
- * @param {number} jobID - unique id of the job offer
- * @returns {Promise<object>} jobDetails
+ * Return item details based on its id
+ * @param {number} id
+ * @returns {Promise<object>} item details
  */
-module.exports.getJobDetails = async (jobID) => {
+module.exports.getItemDetails = async (id) => {
   let response;
   try {
-    response = await hackerNewsAPI.get(`/v0/item/${jobID}.json`);
+    response = await hackerNewsAPI.get(`/v0/item/${id}.json`);
   } catch (err) {
-    logger.log('error', `${jobID} call finished with an error:\n${err}\nskipping`);
+    logger.log('error', `${id} call finished with an error:\n${err}`);
     throw err;
   }
+  return response.data;
+};
 
+module.exports.getMaxItem = async () => {
+  const response = await hackerNewsAPI.get('/v0/maxitem.json');
   return response.data;
 };

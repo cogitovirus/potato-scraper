@@ -57,10 +57,10 @@ const collection = 'HNJobPostings';
 ```
 
 ## TODO:
-- [ ] write a test
-- [ ] investigate undefined / nulls
-- [ ] encapsulate web scraping logic / jobSyncing logic
 - [ ] sync some postings with mongoDB
+- [ ] investigate undefined / nulls
+- [x] encapsulate web scraping logic / jobSyncing logic
+- [x] write a test
 - [x] web scraping with https://www.npmjs.com/package/jsdom
 - [x] handle empty urls
 - [x] strip company url of any additional paths

@@ -2,6 +2,7 @@ const hnAPI = require('./src/hackerNewsAPI');
 const crawler = require('./src/crawler');
 const { cleanURL } = require('./src/utils/cleanURL');
 const { logger } = require('./src/utils/logger');
+const JobPostingModel = require('./src/db/model/HNJobPostingsModel');
 require('dotenv').config();
 
 async function main() {
@@ -9,8 +10,12 @@ async function main() {
   // "id": 32839972,
   // "type": "job",
 
-  const maxItem = await hnAPI.getMaxItem();
-  console.log(maxItem)
+  const lastJobStory = await hnAPI.getJobStories(1);
+  const jobPosting = await hnAPI.getItemDetails(lastJobStory);
+  console.log(jobPosting);
+
+  // that feels shit
+  await JobPostingModel.insertJobPosting(jobPosting);
 
 
 

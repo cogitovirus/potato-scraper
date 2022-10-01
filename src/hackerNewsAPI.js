@@ -1,5 +1,5 @@
 const axios = require('axios');
-const logger = require('./utils/logger');
+const { logger } = require('./utils/logger');
 
 // TODO: move to props
 const hackerNewsAPI = axios.create({
@@ -33,9 +33,9 @@ module.exports.getItem = async (id) => {
 };
 
 /**
- * @returns {number} max id
+ * @returns {Promise<number>} max id
  */
 module.exports.getMaxItemId = async () => {
   const response = await hackerNewsAPI.get('/v0/maxitem.json');
-  return response.data;
+  return parseInt(response.data, 10);
 };

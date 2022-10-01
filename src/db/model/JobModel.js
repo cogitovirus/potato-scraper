@@ -6,7 +6,7 @@ const client = new MongoDBClient();
 const DB_NAME = 'potato-scraper';
 const DB_COLLECTION = 'HNJobPostings';
 
-module.exports.insertJobPosting = async (jobPosting) => {
+module.exports.insertOneJobPosting = async (jobPosting) => {
   const db = await client.db(DB_NAME);
 
   try {
@@ -19,8 +19,22 @@ module.exports.insertJobPosting = async (jobPosting) => {
   }
 };
 
+module.exports.insertManyJobPostings = async (jobPostings) => {
+  const db = await client.db(DB_NAME);
+
+  try {
+    // this option prevents additional documents from being inserted if one fails
+    const options = { ordered: true };
+    const result = await db.collection(DB_COLLECTION).insertMany(jobPostings, options);
+    logger.log('info', `${result.insertedCount} document(s) inserted`);
+  } catch (err) {
+    logger.log('error', 'unable to insert job posting');
+    throw err;
+  }
+};
+
 /**
- * @returns {number} - max id or 0 if collection is empty
+ * @returns {Promise<number>} - max id or 0 if collection is empty
  */
 module.exports.getMaxItemId = async () => {
   const db = await client.db(DB_NAME);
@@ -30,5 +44,5 @@ module.exports.getMaxItemId = async () => {
   if (!results.length) {
     return 0;
   }
-  return results[0].id;
+  return parseInt(results[0].id, 10);
 };

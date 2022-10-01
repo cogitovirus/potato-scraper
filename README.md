@@ -6,6 +6,8 @@ Web & api scraping some basic info about startups from YCombinator. For fun.
 node index.js
 ```
 
+Last at: 84971
+
 ## Getting the data
 HN has an API that is generally accessible https://github.com/HackerNews/API.
 First step would be to copy only job posting data from the Web API to my own MongoDB.
@@ -26,6 +28,15 @@ Syncing will be done in batches and will feed the `HNJobPostings` collection:
 2. check the max(id) of the objects in HN API https://hacker-news.firebaseio.com/v0/maxitem.json
 3. update the range. copy full objects (model may vary? enforce a model or not? )
 [TODO] any further update to the collection will run daily with cloud functions & pub/sub
+
+## Time req for full sync
+ mongo itemMaxID: 0, hacker news max: 33046189
+ - 33m records
+ - with concurrency 1 and 1 second to get the data it would take 381 days
+ - concurrency 10 - 38 days
+ - 1 item should be ~200B , so let's say max 1% of all items are job postings. It would be ~600MB
+
+
 
 ## Enriching the data
 With hnJobPosting collections full, not it's time to do some scraping.
@@ -70,7 +81,7 @@ const collection = 'HNJobPostings';
 - [x] console.log company url
 
 ## Junkyard
-look into: 
+look into:
 https://mongoosejs.com/
 
 

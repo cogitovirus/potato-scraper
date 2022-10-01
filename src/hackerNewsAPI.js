@@ -19,9 +19,9 @@ module.exports.getJobStories = async (limit) => {
 /**
  * Return item details based on its id
  * @param {number} id
- * @returns {Promise<object>} item details
+ * @returns {Object} item details
  */
-module.exports.getItemDetails = async (id) => {
+module.exports.getItem = async (id) => {
   let response;
   try {
     response = await hackerNewsAPI.get(`/v0/item/${id}.json`);
@@ -32,7 +32,10 @@ module.exports.getItemDetails = async (id) => {
   return response.data;
 };
 
-module.exports.getMaxItem = async () => {
+/**
+ * @returns {number} max id
+ */
+module.exports.getMaxItemId = async () => {
   const response = await hackerNewsAPI.get('/v0/maxitem.json');
   return response.data;
 };

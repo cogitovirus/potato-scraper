@@ -84,6 +84,7 @@ https://github.com/HackerNews/API
 
 https://hacker-news.firebaseio.com/v0/jobstories.json
 https://hacker-news.firebaseio.com/v0/item/32839972.json
+// starts at 1
 
 cloud sql + pub/sub run once a day + cloud function ? how much would it cost
 https://cloud.google.com/scheduler/docs/tut-pub-sub

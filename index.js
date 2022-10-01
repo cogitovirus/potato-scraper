@@ -1,28 +1,26 @@
+// TODO: those imports are just a junkyard for debugging purposes
 const hnAPI = require('./src/hackerNewsAPI');
 const crawler = require('./src/crawler');
 const { cleanURL } = require('./src/utils/cleanURL');
 const { logger } = require('./src/utils/logger');
-const JobPostingModel = require('./src/db/model/HNJobPostingsModel');
+const JobModel = require('./src/db/model/JobModel');
+const { syncJobs } = require('./src/syncJobs');
+
 require('dotenv').config();
 
 async function main() {
-  // mongo sync
-  // "id": 32839972,
-  // "type": "job",
-
-  const lastJobStory = await hnAPI.getJobStories(1);
-  const jobPosting = await hnAPI.getItemDetails(lastJobStory);
-  console.log(jobPosting);
-
-  // that feels shit
-  await JobPostingModel.insertJobPosting(jobPosting);
-
-
-
   // limited the posting to 5 just to avoid possible rate limit
-  // const jobStories = await hnAPI.getJobStories(5);
+  // const jobStoriesIds = await hnAPI.getJobStories(5);
+  // const jobItems = await Promise.all(jobStoriesIds.map(async (jobID) => hnAPI.getItemDetails(jobID)));
 
-  // const jobDetails = await Promise.all(jobStories.map(async (jobID) => hnAPI.getItemDetails(jobID)));
+  // for (const jobItem of jobItems) {
+  //   // eslint-disable-next-line no-await-in-loop
+  //   await JobModel.insertJobPosting(jobItem);
+  // }
+
+  await syncJobs();
+
+  // ---------------------------
 
   // let companyURLs = jobDetails.map((jobDetail) => jobDetail.url)
   //   .filter((url) => url !== undefined)

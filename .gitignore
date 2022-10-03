@@ -5,3 +5,6 @@ node_modules
 # logs
 combined.log
 error.log
+
+# data
+data/

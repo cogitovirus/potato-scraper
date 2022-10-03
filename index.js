@@ -18,7 +18,7 @@ async function main() {
   //   await JobModel.insertJobPosting(jobItem);
   // }
 
-  await syncJobs(5, 84971);
+  await syncJobs(5);
 
   // ---------------------------
 
